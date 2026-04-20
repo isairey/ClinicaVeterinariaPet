@@ -1,0 +1,54 @@
+{% extends 'GestionDeClientes/GestionDeClientes.html' %}
+{% load static %}
+{% block tituloSeccion %}
+Reportes Clientes
+{% endblock %}
+
+{% block contenido %}
+
+    <script src="{% static 'js/Chart.js' %}"></script>
+    <script src="{% static 'vendor/jquery/js/jquery.js' %}"></script>
+    
+    <div id="div-canvas" width="150" height="150">
+        <canvas id="myChart" width="150" height="150"></canvas>
+    </div>
+    
+
+    <script>
+        let miCanvas = document.getElementById("myChart").getContext("2d");
+
+        var gastos = "{{ gastos }}"
+        var clientes = "{{ diccionario }}"
+
+        console.log("Hola")
+        console.log(clientes)
+
+        /*for ( var i=0; i<gastos.length;i++){
+            console.log("Hola", i)
+        }*/
+
+        /*for ( var i=0; i<clientes.length;i++){
+            console.log("Chau", i)
+        }*/
+
+
+        var chart = new Chart(miCanvas, {
+            type: "bar",
+            data:{
+                labels:"{{labels}}",
+                datasets: [
+                    {
+                        label: "Mi grafica",
+                        backgroundColor: ["#FF6384","#63FF84"],
+                        borderColor: "rgb(100,200,255)",
+                        data: "{{datas}}"
+                    }
+                ]
+
+            }
+        }
+
+        )
+    </script>
+    
+{% endblock contenido %}

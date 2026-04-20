@@ -1,0 +1,6 @@
+{% for field in form.visible_fields %}
+    {% include "./field.html" %}
+{% endfor %}
+{% if accion %}
+    {% include "./submit.html" %}
+{% endif %}

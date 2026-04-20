@@ -1,0 +1,38 @@
+{% extends "sitioBase.html" %}
+{% load static %}
+
+{% block paginaSeccionGeneral %}
+  <section>
+
+      {% block secciones %}
+      {% endblock %}
+
+      <div class="row">
+          <div class="col-xs-10 col-sm-11 col-md-11">
+            <h4 class="titulo">
+              {% block tituloSeccion %}
+              {% endblock %}
+            </h4>
+          </div>
+          <div class="col-xs-2 col-sm-1 col-md-1">
+            <a href="{% url 'clientes:ayudaCliente' %}" target="_blank">
+              <i class="glyphicon glyphicon-book"></i>
+            </a>
+          </div>
+      </div>
+      
+      {% block contenido %}
+      {% endblock contenido %}
+      
+  </section>
+{% endblock paginaSeccionGeneral %}
+
+
+{% block footer %}
+  <p>Para mas información  de los Clientes haga click aquí<p>
+{% endblock footer %}
+
+{% block paginaJavascript %}
+    {{ block.super }}
+    <script src="{% static 'js/Chart.js' %}"></script>
+{% endblock paginaJavascript %}

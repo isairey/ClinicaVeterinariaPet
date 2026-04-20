@@ -1,0 +1,31 @@
+<a id="estado"></a>
+<h3 class="titulo">Facturación</h3>
+<div class="contenedor">
+{% with factura=practica.factura %}
+    {% if factura.pago and perms.GestionDeFacturas.factura_ver_pagas or not factura.pago and perms.GestionDeFacturas.factura_ver_no_pagas %}
+        <a href="{% url "facturas:ver" factura.id %}">
+        <p><b>Factura número:</b> {{ factura.id }}</p>
+        </a>
+    {% else %}
+        <p><b>Factura número:</b> {{ factura.id }}</p>
+    {% endif %}
+    <p><b>Factura tipo:</b> {{ factura.tipo|capfirst }}</p>
+    <p><b>Fecha de facturación:</b> {{ factura.fecha|date:"d/m/y" }}</p>
+    <p>
+        <b>Cliente:</b>
+        {% if not practica.cliente.baja and perms.GestionDeClientes.cliente_ver_habilitados %}
+            <a href="{% url "clientes:clienteVer" practica.cliente.id %}">
+                {{ practica.cliente }}
+            </a>
+        {% else %}
+            {{ practica.cliente }}
+        {% endif %}
+    </p>
+    <p><b>Importe facturado:</b> ${{ factura.total|floatformat:2 }}</p>
+    {% if factura.pago %}
+    <p><b>Fecha de cobro:</b> {{ factura.pago.fecha|date:"d/m/Y" }}
+    {% else %}
+    <p><b>Importe adeudado:</b> ${{ factura.totalAdeudado|floatformat:2 }}</p>
+    {% endif %}</p>
+{% endwith %}
+</div>

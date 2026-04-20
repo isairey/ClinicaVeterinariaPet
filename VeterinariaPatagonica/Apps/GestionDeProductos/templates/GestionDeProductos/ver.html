@@ -1,0 +1,29 @@
+{% extends 'GestionDeProductos/GestionDeProductos.html' %}
+
+{% block titulo %}
+Gestion de Productos/Insumos | Ver Producto/Insumo
+{% endblock %}
+
+{% block tituloSeccion %}
+{% include "snippets/titulo.html" with titulo="Producto/Insumo: "|add:producto.nombre %}
+{% endblock %}
+
+{% block contenido %}
+
+    <div>
+        <p> <strong>Nombre: </strong>{{ producto.nombre }} ({% if producto.baja %} Deshabilitado {% else %} Habilitado {% endif %}) </p>
+        <p> <strong>Marca: </strong>{{ producto.marca }}</p>
+        <p> <strong>Stock: </strong>{{ producto.stock }}</p>
+        <p> <strong>Forma De Presentacion: </strong>{{ producto.get_formaDePresentacion_display }}</p>
+        <p> <strong>Precio Por Unidad: $ </strong>{{ producto.precioPorUnidad }}</p>
+        <p> <strong>Precio De Compra: $ </strong>{{ producto.precioDeCompra}}</p>
+        <p> <strong>Rubro: </strong>{{ producto.rubro }}</p>
+        <p> <strong>Descripcion: </strong>{{ producto.descripcion }}</p>
+    </div>
+
+    <div class= "col-sm-offset-11">
+        <a><span class="glyphicon glyphicon-arrow-left" type=button onClick="javascript:history.go(-1);" data-toggle="tooltip" data-placement="bottom" title="Volver atrás."></a>
+    </div>
+
+
+{% endblock contenido %}

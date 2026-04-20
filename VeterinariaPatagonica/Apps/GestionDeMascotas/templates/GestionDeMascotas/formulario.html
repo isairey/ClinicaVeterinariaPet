@@ -1,0 +1,67 @@
+{% extends 'GestionDeMascotas/GestionDeMascotas.html' %}
+{% load static %}
+
+{% block paginaEstilos %}
+    {{ block.super }}
+    <link href="{% static "vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" %}" rel="stylesheet">
+    <link href="{% static "css/tema-datetimepicker.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block titulo %}
+Gestion de Mascotas | {{titulo}}
+{% endblock %}
+
+{% block tituloSeccion %}
+{% if titulo == 1 %}
+    {% include "snippets/titulo.html" with titulo="Nueva Mascota" %}
+{% endif %}
+{% if titulo == 2 %}
+    {% include "snippets/titulo.html" with titulo="Modificar Mascota" %}
+{% endif %}
+{% endblock %}
+
+{% block contenido %}
+{{form.media}}
+
+    <form class="form-horizontal formulario" action="{{ request.path }}" method="post">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="errores">
+                <strong>Por favor revise los siguientes errores:</strong>
+                <ul>
+                    {% include "snippets/formErrores.html" %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% include "./snippets/form.html" with accion="Guardar Datos" %}
+
+
+    </form>
+
+{% endblock %}
+
+{% block paginaJavascript %}
+    {{block.super}}
+    <script src="{% static "vendor/moment/moment.js" %}"></script>
+    <script src="{% static "vendor/moment/locale/es.js" %}"></script>
+    <script src="{% static "vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script src="{% static 'js/GestionDeMascotas.js' %}"></script>
+    <script type="text/javascript">
+    $(function () {
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes();
+            var dateTime = date+' '+time;
+            $("#id_fechaNacimiento").datetimepicker({
+                locale: 'es',
+                format: 'L',
+                maxDate: new Date()
+            });
+
+    });
+
+    </script>
+{% endblock %}

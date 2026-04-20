@@ -1,0 +1,140 @@
+.cuadro-titulo i.glyphicon{
+    margin-right: 5px;
+}
+
+ul.historial {
+    margin: 0px;
+}
+ul.historial li {
+    position: relative;
+    clear: both
+}
+.historial .estado {
+    margin: 0;
+    border-left: 3px solid #e8e8e8;
+    overflow: visible;
+    padding: 10px 15px;
+    margin-left: 20px
+}
+.historial h2.link {
+    position: relative;
+    font-size: 16px;
+    margin: 0
+}
+.historial h2.link:before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    left: -23px;
+    top: 12px;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 3px solid #d2d3d2;
+    border-radius: 14px;
+    background: #f9f9f9
+}
+.historial .detalles {
+    padding: .25em 0
+}
+#historial .cuadro-contenido {
+    padding: 0px;
+}
+
+.practica {
+    border: 1px solid #DDD;
+    padding: 0px;
+    margin: 20px 0px 10px 0px;
+}
+.botones-navegacion {
+    border: 0px;
+    border-radius: 0px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #DDD;
+    min-height: 0px;
+}
+.botones-navegacion>ul.nav.navbar-nav>li>a {
+    padding: 6px 12px;
+    margin: 0px;
+    border: 0px;
+}
+.botones-navegacion>ul.nav.navbar-nav {
+    margin: 0px !important;
+}
+
+.practica-controles {
+    border-style: none;
+    padding: 6px;
+}
+.practica-controles>.btn-toolbar {
+    text-align: center;
+}
+.practica-controles>.btn-toolbar>.btn-group.creacion {
+    float: none;
+    margin: 10px 0px 0px 0px;
+}
+
+.resumen>.bloque>.dato.servicios>a,
+.resumen>.bloque>.dato.productos>a {
+    color: #555;
+}
+.resumen>.bloque>.dato.servicios table,
+.resumen>.bloque>.dato.productos table {
+    margin-left: 16px;
+}
+.resumen>.bloque>.dato.servicios table td.cantidad,
+.resumen>.bloque>.dato.productos table td.cantidad {
+    padding-right: 4px;
+    text-align: right;
+}
+.resumen>.bloque>.dato.servicios table td.descripcion,
+.resumen>.bloque>.dato.productos table td.descripcion {
+    padding-left: 4px;
+}
+.resumen>.bloque>.dato.productos table tr.stock-faltante {
+    color: #A94442;
+}
+
+.referencias,
+.grafico {
+    text-align: center;
+    overflow: auto;
+}
+.grafico .leyenda {
+    font-weight: bold;
+}
+.grafico>canvas {
+    border: none;
+}
+#formulario {
+    margin-bottom: 20px;
+}
+
+
+#grafico-perfil-tda-despues,
+#grafico-perfil-tda-antes {
+    min-width: 250px;
+    min-height: 250px;
+}
+#grafico-realizaciones {
+    min-width: 500px;
+    min-height: 300px;
+}
+#grafico-actualizaciones.cirugia {
+    min-height: 350px;
+    min-width: 400px;
+}
+#grafico-actualizaciones.consulta {
+    min-height: 350px;
+    min-width: 350px;
+}
+#grafico-tda-raros.radar,
+#grafico-tda-normales.radar {
+    min-height: 400px;
+    min-width: 400px;
+}
+#grafico-tda-raros.barras,
+#grafico-tda-normales.barras {
+    min-height: 350px;
+    min-width: 400px;
+}

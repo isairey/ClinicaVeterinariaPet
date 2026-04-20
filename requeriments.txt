@@ -1,0 +1,8 @@
+Python 3.5.3
+Django 2.0.8
+localflavor
+install django-localflavor
+django-autocomplete-light (dal)
+Sphinx
+openpyxl
+reportlab

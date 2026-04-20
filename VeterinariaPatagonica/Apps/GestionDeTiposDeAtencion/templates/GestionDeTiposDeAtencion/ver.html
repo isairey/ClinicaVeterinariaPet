@@ -1,0 +1,18 @@
+{% extends "GestionDeTiposDeAtencion/GestionDeTiposDeAtencion.html" %}
+{% block titulo %}
+Ver tipo de atención
+{% endblock %}
+{% block tda-titulo %}
+{% include "snippets/titulo.html" with titulo="Tipo de atención: "|add:tipoDeAtencion.nombre %}
+{% endblock %}
+{% block tda-contenido %}
+<div class="contenedor">
+    <p><b>Nombre:</b> {{ tipoDeAtencion.nombre }} ({% if tipoDeAtencion.baja %}deshabilitado{% else %}habilitado{% endif %})</p>
+    <p><b>Descripción:</b> {{ tipoDeAtencion.descripcion }}</p>
+    <p><b>Lugar de atención:</b> {{ tipoDeAtencion.get_lugar_display }}</p>
+    <p><b>Emergencia:</b> {{ tipoDeAtencion.emergencia|yesno }}</p>
+    <p><b>Tipo de servicio:</b> {{ tipoDeAtencion.get_tipoDeServicio_display }}</p>
+    <p><b>Franja horaria:</b> de {{ tipoDeAtencion.inicioFranjaHoraria }} a {{ tipoDeAtencion.finFranjaHoraria }}</p>
+    <p><b>Recargo:</b> {{ tipoDeAtencion.recargo|floatformat:2 }}%</p>
+</div>
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends 'GestionDePracticas/GestionDePracticas.html' %}
+{% load static %}
+{% block paginaEstilos %}
+{{ servicios.media.css }}
+{{ productos.media.css }}
+{{ block.super }}
+<style type="text/css">
+.cuadro-contenido .row>.seccion {
+    font-style: italic;
+    color: #777;
+    padding: 3px  0px;
+}
+.cuadro-contenido .row {
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.cuadro-contenido .fijos>.row>.seccion,
+.cuadro-contenido .fijos>.row>.form-group {
+    margin: 0px !important;
+    padding: 2px !important;
+}
+.cuadro-contenido .fijos>.row>.form-group.cantidad>.cuasi-control {
+    padding: 4px 6px;
+}
+</style>
+{% endblock %}
+{% block titulo %}
+Modificar {{ tipo }}
+{% endblock %}
+{% block practica-titulo %}
+{% include "snippets/titulo.html" with titulo="Modificar "|add:tipo %}
+{% endblock %}
+{% block practica-contenido %}
+<div class="contenedor">
+    {% include "snippets/errores.html" %}
+    <form class="form-horizontal formulario" action="{{ request.path }}" method="POST" onsubmit="validar(event);">
+        <div class="row">
+            <div class="col-xs-12 hidden">
+                {% csrf_token %}
+            </div>
+            <div class="col-xs-12">
+                <div id="formset-{{ servicios.prefix }}-errores">
+                    {% if servicios.total_error_count %}
+                        <div class="errores">
+                            <b>Por favor revise los siguientes errores:</b>
+                            <ul>{% include 'snippets/formsetErrores.html' with formset=servicios %}</ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="cuadro">
+                    <div class="cuadro-titulo">
+                        <b>Servicios realizados</b> {% include "snippets/ayuda.html" with id="ayuda-servicios-realizados" content="Puede modificar el listado de servicios realizados a la mascota durante la atención junto con la cantidad de veces que se realizó cada uno. No pueden haber servicios duplicados." placement="bottom" %}
+                    </div>
+                    <div class="cuadro-contenido">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11 seccion">
+                                Servicios programados
+                            </div>
+                        </div>
+                        <div class="fijos">
+                        {% for detalle in realizada.serviciosFijos %}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2 col-md-1 form-group cantidad ">
+                                <div class="cuasi-control">
+                                    {{ detalle.cantidad }}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-10 col-md-11 form-group servicio ">
+                                <div class="cuasi-control">
+                                    {{ detalle.servicio.get_tipo_display|capfirst }}: {{ detalle.servicio.nombre }} ${{ detalle.servicio.precioManoDeObra|floatformat:2 }} ({{ detalle.servicio.tiempoEstimado }} min.)
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11 seccion">
+                                Nuevos servicios
+                            </div>
+                        </div>
+                        {% include "snippets/formset.html" with formset=servicios %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div id="formset-{{ productos.prefix }}-errores">
+                    {% if productos.total_error_count %}
+                        <div class="errores">
+                            <b>Por favor revise los siguientes errores:</b>
+                            <ul>{% include 'snippets/formsetErrores.html' with formset=productos %}</ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="cuadro">
+                    <div class="cuadro-titulo">
+                        <b>Productos utilizados</b> {% include "snippets/ayuda.html" with id="ayuda-productos-utilizados" content="Puede modificar el listado de productos y cantidades de producto utilizados durante la realizacion de los servicios. No pueden haber productos duplicados." placement="bottom" %}
+                    </div>
+                    <div class="cuadro-contenido">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11 seccion">
+                                Productos programados
+                            </div>
+                        </div>
+                        <div class="fijos">
+                        {% for detalle in realizada.productosFijos %}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2 col-md-1 form-group cantidad ">
+                                <div class="cuasi-control">
+                                    {{ detalle.cantidad }}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-10 col-md-11 form-group servicio ">
+                                <div class="cuasi-control">
+                                    {{ detalle.producto.nombre }} ${{ detalle.producto.precioDeCompra|floatformat:2 }} ({{ detalle.producto.stock }} en stock)
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11 seccion">
+                                Nuevos productos
+                            </div>
+                        </div>
+                        {% include "snippets/formset.html" with formset=productos %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 acciones">
+                <button type="submit" class="btn btn-sm btn-default center-block">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block paginaJavascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        var validadores = [
+            {
+                "validador" : validarFormset,
+                "argumentos" : {
+                    "validarCantidades" : false,
+                    "comparador" : compararServicios,
+                    "formset_id" : "{{ servicios.prefix }}-formset",
+                    "errores" : document.getElementById("formset-{{ servicios.prefix }}-errores"),
+                }
+            },
+            {
+                "validador" : validarFormset,
+                "argumentos" : {
+                    "validarCantidades" : false,
+                    "comparador" : compararProductos,
+                    "formset_id" : "{{ productos.prefix }}-formset",
+                    "errores" : document.getElementById("formset-{{ productos.prefix }}-errores"),
+                }
+            }
+        ]
+        document.onreadystatechange = function(){
+            var servicios = document.getElementById('{{ servicios.prefix }}-formset');
+            var productos = document.getElementById('{{ productos.prefix }}-formset');
+            actualizarEliminar(servicios);
+            actualizarEliminar(productos);
+        }
+    </script>
+
+
+{{ servicios.media.js }}
+{{ productos.media.js }}
+
+
+{% endblock %}

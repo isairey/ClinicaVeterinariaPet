@@ -1,0 +1,21 @@
+{% extends "sitioBase.html" %}
+{% load static %}
+{% block paginaSeccionGeneral %}
+    <section>
+    <div class="row">
+        <div class="col-xs-10 col-sm-11 col-md-11">
+          <h4 class="titulo">
+            {% block tda-titulo %}
+            {% endblock %}
+          </h4>
+        </div>
+        <div class="col-xs-2 col-sm-1 col-md-1">
+          <a href="{% url 'tiposDeAtencion:ayudaTipoDeAtencion' %}" target="_blank">
+            <i class="glyphicon glyphicon-book"></i>
+          </a>
+        </div>
+    </div>
+    {% block tda-contenido %}
+    {% endblock %}
+    </section>
+{% endblock %}

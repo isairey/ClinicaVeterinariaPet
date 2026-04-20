@@ -1,0 +1,27 @@
+{% extends 'sitioBase.html' %}
+{% load static %}
+{% block paginaEstilos %}
+    {{ block.super }}
+    <link href="{% static 'GestionDePracticas/css/GestionDePracticas.css' %}" rel="stylesheet">
+{% endblock %}
+{% block paginaSeccionGeneral %}
+    <section>
+        <div class="row">
+            <div class="col-xs-10 col-sm-11 col-md-11">
+                <h3 class="titulo">
+                {% block practica-titulo %}
+                {% endblock %}
+                </h3>
+            </div>
+            <div class="col-xs-2 col-sm-1 col-md-1 link-ayuda-contextual">
+                {% if tipo %}
+                <a href="{% url "practicas:"|add:tipo|add:":ayuda" %}" target="_blank">
+                    <i class="glyphicon glyphicon-book"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% block practica-contenido %}
+        {% endblock %}
+    </section>
+{% endblock %}

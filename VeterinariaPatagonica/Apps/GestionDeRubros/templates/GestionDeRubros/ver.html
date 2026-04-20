@@ -1,0 +1,23 @@
+{% extends 'GestionDeRubros/GestionDeRubros.html' %}
+
+{% block titulo %}
+Gestion de Rubros | Ver Rubro
+{% endblock %}
+
+{% block tituloSeccion %}
+{% include "snippets/titulo.html" with titulo="Rubro: "|add:rubro.nombre %}
+{% endblock %}
+
+{% block contenido %}
+
+    <div>
+        <p> <strong> Identificador: </strong>{{ rubro.id }}</p>
+        <p> <strong> Nombres: </strong>{{ rubro.nombre }} </p>
+        <p> <strong> Descripcion: </strong>{{ rubro.descripcion}}</p>
+    </div>
+    <div class= "col-sm-offset-11">
+      <a><span class="glyphicon glyphicon-arrow-left" type=button onClick="javascript:history.go(-1);" data-toggle="tooltip" data-placement="bottom" title="Volver atrás."></a>
+    </div>
+
+
+{% endblock contenido %}

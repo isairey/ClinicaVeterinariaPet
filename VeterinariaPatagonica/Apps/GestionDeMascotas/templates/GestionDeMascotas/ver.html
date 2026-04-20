@@ -1,0 +1,26 @@
+{% extends 'GestionDeMascotas/GestionDeMascotas.html' %}
+
+{% block titulo %}
+Gestion de Mascotas | Ver Mascota
+{% endblock %}
+
+{% block tituloSeccion %}
+{% include "snippets/titulo.html" with titulo="Mascota: "|add:mascota.patente %}
+{% endblock %}
+
+{% block contenido %}
+
+    <div>
+        <p> <strong>Patente: </strong>{{mascota.patente}} 
+        <p> <strong>Dueño: </strong>{{mascota.cliente}}</p>
+        <p> <strong>Nombre:</strong> {{ mascota.nombre }} ({% if mascota.baja %}Deshabilitado{% else %}Habilitado{% endif %})</p>
+        <p> <strong>Especie:</strong> {{mascota.especie}} </p>
+        <p> <strong>Fecha de Nacimiento: </strong>{{ mascota.fechaNacimiento}}</p>
+        <p> <strong>Raza: </strong>{{ mascota.raza}}</p>
+    </div>
+
+    <div class= "col-sm-offset-11">
+      <a><span class="glyphicon glyphicon-arrow-left" type=button onClick="javascript:history.go(-1);" data-toggle="tooltip" data-placement="bottom" title="Volver atrás."></a>
+    </div>
+
+{% endblock contenido %}

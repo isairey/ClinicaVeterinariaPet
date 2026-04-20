@@ -1,0 +1,56 @@
+{% extends 'GestionDeServicios/GestionDeServicios.html' %}
+
+{% load static %}
+
+{% block titulo %}
+Gestion de Servicios | Crear Servicios
+{% endblock %}
+
+{% block servicio-titulo %}
+{% if titulo == 1 %}
+    {% include "snippets/titulo.html" with titulo="Nuevo Servicio" %}
+{% endif %}
+{% if titulo == 2 %}
+    {% include "snippets/titulo.html" with titulo="Modificar Servicio" %}
+{% endif %}
+{% endblock %}
+
+{% block servicioTitulo %}
+{% if titulo == 1 %}
+    Nuevo Servicio
+{% endif %}
+{% if titulo == 2 %}
+    Modificar Servicio
+{% endif %}
+{% endblock %}
+
+{% block servicio-contenido %}
+<form class="form-horizontal formulario" action="{{ request.path }}" method="post">
+
+  {% csrf_token %}
+
+  {% if form.errors %}
+      <div class="errores">
+          <strong>Por favor revise los siguientes errores:</strong>
+          <ul>{% include "snippets/formErrores.html" %}</ul>
+      </div>
+  {% endif %}
+
+  {% include "./snippets/form.html"%}
+
+  <div class= "col-xs-12">
+    {{formset.management_form}}
+    {% for form in formset %}
+    <div class="col-xs-10" id="item-{{forloop.counter}}">
+      {{form}}
+    </div>
+    {% endfor %}
+    <div class="col-xs-2" id="buttons">
+      <a id="button-add" class="btn btn-sm btn-default" role="button">Agregar Insumo</a>
+    </div>
+  </div>
+  <div id="div-boton-guardar-datos" align="center">
+  <p><button class="btn btn-sm btn-default"type="submit">Guardar Datos</button></p>
+  </div>
+</form>
+{% endblock %}

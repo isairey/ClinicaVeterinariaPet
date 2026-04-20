@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/../static/images/iconoBarraNavegacion.jpg">
+{% block paginaEstilos %}
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/fontawesome/css/font-awesome.css' %}" rel="stylesheet">
+  <link href="{% static 'css/veterinaria-patagonica.css' %}" rel="stylesheet">
+{% endblock paginaEstilos %}
+  <title>
+{% block paginaTitulo %}
+  Veterinaria Patagónica
+{% endblock paginaTitulo %}
+  </title>
+  </head>
+  <body>
+  <div class="container-fluid" id="el_container_fluid">
+  {% block cabecera %}
+  <div class="row">
+    <header class="col-xs-12" id="sitio-encabezado">
+      <h2><a href="{% url "index" %}">Veterinaria Patagónica</a></h2>
+    </header>
+    <nav id="sitio-navbar" class="col-xs-12 navbar">
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown menu-usuario">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            Menu de usuario <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+          {% block menuUsuario %}
+            <li>
+              <div class="usuario">
+                <i class="fa fa-user"></i>
+                <b>{{ request.user.username|lower }}</b>
+              </div>
+            </li>
+            {% block menuAyuda %}
+            <li><a href="{% url "ayuda"%}" target="_blank"><i class="glyphicon glyphicon-book"></i>Manual de usuario</a></li>
+            {% endblock %}
+            {% if not request.user.esAdministrativo %}
+            <li>
+              <a href="{% url "practicas:realizaciones" %}">
+                <i class="fa fa-history"></i>
+                Prácticas realizadas
+              </a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{% url 'usuarios:changePassword' %}">
+                <i class="glyphicon glyphicon-edit "></i>
+                Cambiar contraseña
+              </a>
+            </li>
+            <li>
+              <a href="{% url "logout" %}">
+                <i class="fa fa-sign-out "></i>
+                Cerrar Sesión</a>
+              </li>
+          {% endblock %}
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  {% endblock cabecera %}
+  <div class="row" id="fila_centro" >
+    <nav class="col-xs-12 col-sm-4 col-md-3 navbar sitio-menu" id="sitio_menu_izq">
+      <div class="left_col scroll-view">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-menu">
+            <i class="fa fa-navicon"> </i>
+          </button>
+        </div>
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu collapse navbar-collapse">
+          {% block paginaMenuIzq %}
+          {% if request.user.esGerente %}
+            {% include './menu/gerentes.html' %}
+          {% elif request.user.esVeterinario %}
+            {% include './menu/veterinarios.html' %}
+          {% elif request.user.esAdministrativo %}
+            {% include './menu/administrativos.html' %}
+          {% endif %}
+          {% endblock paginaMenuIzq %}
+        </div>
+      </div>
+    </nav>
+    <div class="col-xs-12 col-sm-8 col-md-9" id="sitio_seccion_principal">
+      <div class="contenedor">
+        {% block paginaSeccionGeneral %}
+          <section>
+            <div class="col-xs-6 col-sm-4 col-md-3" >
+              <a class="btn btn-primary cuadradito" href="{% url "clientes:clienteCrear" %}" role="button" id="imagenCliente"></a>
+              <p class= "text-primary">Crear un Cliente</p>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "mascotas:mascotaCrear" %}" role="button" id="imagenMascota"></a>
+              <p class= "text-primary">Crear una Mascota</p>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "productos:productoCrear" %}" role="button" id="imagenProducto"></a>
+              <p class= "text-primary">Crear un Producto / Insumo</p>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+            <a class="btn btn-primary cuadradito" href="{% url "practicas:consulta:crear:practica" %}" role="button" id="imagenConsulta"></a>
+            <p class= "text-primary">Crear una Consulta</p>
+            </div>
+            {% if request.user.esGerente %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "servicios:servicioCrear" %}" role="button" id="imagenServicio"></a>
+              <p class= "text-primary">Crear un Servicio</p>
+            </div>
+            {% endif %}
+            {% if request.user.esGerente or request.user.esAdministrativo%}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "facturas:facturar" %}" role="button" id="imagenFactura"></a>
+              <p class= "text-primary">Crear una Factura</p>
+            </div>
+            {% endif %}
+            {% if request.user.esGerente %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "tiposdeatencion:crear" %}" role="button" id="imagenTipoDeAtencion"></a>
+              <p class= "text-primary">Crear un Tipo de Atención</p>
+            </div>
+            {% endif %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <a class="btn btn-primary cuadradito" href="{% url "practicas:cirugia:crear:practica" %}" role="button" id="imagenCirugia"></a>
+              <p class= "text-primary">Crear una Cirugía</p>
+            </div>
+          </section>
+        {% endblock paginaSeccionGeneral %}
+      </div>
+    </div>
+    </div>
+    <div class="row">
+      <footer class="col-xs-12" id="sitio-piedepagina">
+        {% block paginaPie %}
+          <p>Último inicio de sesión registrado el {{ request.user.last_login|date:"d/m/y" }} a las {{ request.user.last_login|date:"H:i" }}</p>
+        {% endblock paginaPie %}
+      </footer>
+    </div>
+  </div>
+  {% block paginaJavascript %}
+    <script src="{% static 'vendor/jquery/js/jquery.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/veterinaria-patagonica.js' %}"></script>
+  {% endblock paginaJavascript %}
+  </body>
+</html>

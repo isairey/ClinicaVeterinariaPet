@@ -1,0 +1,33 @@
+{% extends 'GestionDeClientes/GestionDeClientes.html' %}
+
+{% block titulo %}
+Gestion de Clientes | Ver Cliente
+{% endblock %}
+
+{% block tituloSeccion %}
+{% include "snippets/titulo.html" with titulo="Cliente: "|add:cliente.dniCuit %}
+{% endblock %}
+
+{% block contenido %}
+
+    <div>
+        <p> <strong>Tipo De Cliente: </strong>{{cliente.tipoDeCliente}} ({% if cliente.baja %}Deshabilitado{% else %}Habilitado{% endif %})</p>
+        <p> <strong>Dni/CUIT: </strong>{{cliente.dniCuit}}</p>
+        <p> <strong>Nombres:</strong> {{ cliente.nombres }} </p>
+        <p> <strong>Apellidos:</strong> {{cliente.apellidos}} </p>
+        <p> <strong>Direccion: </strong>{{ cliente.direccion }}</p>
+        <p> <strong>Localidad: </strong>{{cliente.localidad}}</p>
+        <p> <strong>Celular: </strong>{{cliente.celular}}</p>
+        <p><strong>Telefono:</strong>{{ cliente.telefono }}</p>
+        <p> <strong>Email:</strong>{{cliente.email}}</p>
+        {% if cliente.tipoDeCliente == 'E'%}
+          <p id="porcentajeDescuentoServicio"> <strong>Descuento Servicio:</strong> {{cliente.descuentoServicio}} %</p>
+          <p> <strong>Descuento Producto: </strong>{{cliente.descuentoProducto}} %</p>
+        {% endif %}
+    </div>
+
+    <div class= "col-sm-offset-11">
+      <a><span class="glyphicon glyphicon-arrow-left" type=button onClick="javascript:history.go(-1);" data-toggle="tooltip" data-placement="bottom" title="Volver atrás."></a>
+    </div>
+
+{% endblock contenido %}

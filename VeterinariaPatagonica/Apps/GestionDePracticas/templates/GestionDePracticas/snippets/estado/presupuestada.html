@@ -1,0 +1,15 @@
+<a id="estado"></a>
+<h3 class="titulo">Presupuesto</h3>
+<div class="contenedor">
+<p><b>Dias de mantenimiento:</b> {{ estado.diasMantenimiento }}</p>
+<p><b>Fecha de emisión:</b> {{ estado.marca|date:"d/m/y" }}</p>
+<p><b>Estado:</b>
+{% if estado.haExpirado %}
+    Expirado
+{% elif estado.fueConfirmado %}
+    Confirmado
+{% else %}
+    Vence el dia {{ estado.vencimiento|date:"d/m/Y" }}
+{% endif %}
+</p>
+</div>

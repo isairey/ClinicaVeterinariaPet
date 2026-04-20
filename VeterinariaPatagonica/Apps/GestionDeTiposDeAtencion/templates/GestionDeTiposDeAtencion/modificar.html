@@ -1,0 +1,23 @@
+{% extends 'GestionDeTiposDeAtencion/crear.html' %}
+{% load static %}
+{% block paginaEstilos %}
+    {{ block.super }}
+{% endblock %}
+{% block tda-contenido %}
+<div class="contenedor">
+    <form class="form-horizontal formulario" action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="errores">
+                <b>Por favor revise los siguientes errores:</b>
+                <ul>
+                    {% include "snippets/formErrores.html" %}
+                </ul>
+            </div>
+        {% endif %}
+        {% include "snippets/field.html" with field=form.nombre %}
+        {% include "snippets/field.html" with field=form.descripcion %}
+        {% include "snippets/submit.html" %}
+    </form>
+</div>
+{% endblock %}

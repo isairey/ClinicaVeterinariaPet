@@ -1,0 +1,7 @@
+.idea/
+*.orig
+*./__pycache__/
+*.py[cod]
+VeterinariaPatagonica.db
+.vscode/
+*./migrations/
